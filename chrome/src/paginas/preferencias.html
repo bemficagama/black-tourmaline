@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <script src="../scripts/dao/db.js"></script>
+  <script src="../scripts/preferencias.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Preferências</title>
+</head>
+
+<body id="body1">
+    <article>
+ 		<label class="switch switch-green">
+	        <input type="checkbox" id="botaoAtivar" class="switch-input" checked="true">
+	        <span class="switch-label" data-on="On" data-off="Off"></span>
+	        <span class="switch-handle"></span>
+       	</label>
+    </article>
+    
+   	<fieldset>
+	 	<legend>Configurações de bloqueio</legend>
+	 	<input id="exUrl" type="checkbox"><label for="buscaUrl">Examinar URL (Endereço da página)</label><br>
+	 	<input id="exTitulo" type="checkbox"><label for="buscaTitulo">Examinar Título</label><br>
+   	</fieldset>
+   	
+   	<fieldset>
+   		<legend>Horário de Acesso</legend>
+	   	<label Style="margin: 10px 0 0 10px;">Inicia em</label>
+	   	<input id="hoInicial" type="time" style="margin: 15px;"> até
+	   	<input id="hoFinal" type="time" style="margin: 15px;">
+	</fieldset>
+	
+	<fieldset>
+		<legend>Seleção de Categorias por Faixa Etária</legend>
+		<table id="faixaItems" style="margin: 15px;width: 100%;display:block;">
+			<thead Style="display: inline-block;width: 100%;height: 20px;">
+				<tr>
+					<th>Faixas</th>
+				</tr>
+			</thead>
+			<tbody style="height: 112px;display: inline-block;width: 90%;overflow: auto;">
+			</tbody>
+  	    </table>
+  	</fieldset>
+
+	<fieldset>
+		<legend>Categorias</legend>
+		<table id="categoriaItems" style="margin: 15px;width: 100%;display:block;">
+			<thead Style="display: inline-block;width: 100%;height: 20px;">
+				<tr>
+					<th><input type="checkbox"></th>
+					<th>Categorias</th>
+				</tr>
+			</thead>
+			<tbody style="height: 112px;display: inline-block;width: 90%;overflow: auto;">
+			</tbody>
+  	    </table>
+  	</fieldset>
+  	
+  	<article>
+		<input type="button" id="botaoPersonalizar" value="Personalizar"/>
+		<input type="button" id="botaoUpdate" value="Update"/>
+		<label id="lbStatus"></label>
+  	</article>
+  	
+  	<fieldset>
+		<legend>Senha</legend>
+		<input type="password" id="senhaAtual" placeholder="Senha Atual" /> <br>
+		<input type="password" id="senhaNova" placeholder="Senha Nova" /> <br>
+		<input type="password" id="senhaConfirma" placeholder="Senha Confirmação" />
+		<input type="button" id="botaoSenha" value="Mudar Senha"/>
+		
+  	</fieldset>
+  	  
+</body>
+
+</html>

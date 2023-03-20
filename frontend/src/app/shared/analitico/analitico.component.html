@@ -1,0 +1,15 @@
+<div class="card shadow" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">
+            <fa-icon [icon]="icons[data.icon]"></fa-icon> {{data.title}}
+            <!-- {{title}} -->
+        </h5>
+        <div class="text-center">
+            <h1>{{data.counter}}</h1>
+        </div>
+        <div class="d-flex justify-content-evenly">
+            <a href="#" class="card-link" routerLink="{{data.routesinsert}}">Nova</a>
+            <a href="#" class="card-link" routerLink="{{data.routeslist}}">Listar</a>
+        </div>
+    </div>
+</div>

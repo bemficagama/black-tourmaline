@@ -1,0 +1,27 @@
+{
+	"name": "BlackTourmaline",
+	"version": "1.0.0",
+	"manifest_version": 3,
+	"default_locale": "en",
+	"description": "Plug-in para Google Chrome, Controle Parental de sites acessados.",
+	"icons": {
+		"128": "img/icon_128.png",
+		"16": "img/icon_16.png"
+	},
+	"author": "André Bemfica",
+	"background": {
+		"service_worker": "main.js"
+	},
+
+	"options_page": "paginas/opcoes.html",
+	"options_ui": {
+		"page": "paginas/opcoes.html",
+		"open_in_tab": false
+	},
+
+	
+	"permissions": [
+		"tabs",
+		"storage"
+	]
+}

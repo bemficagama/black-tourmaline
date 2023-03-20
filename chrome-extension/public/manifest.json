@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "BlackTourmaline",
+  "version": "0.1",
+  "description": "Plug-in para Google Chrome, Controle Parental de sites acessados.",
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequestWithHostAccess",
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "static/js/content.js"
+      ],
+      "matches": [
+        "http://*.example.com/*",
+        "https://*.example.com/*",
+        "https://*.microben.com.br/*"
+      ]
+    }
+  ],
+  "icons": {
+    "192": "logo190.png"
+  },
+  "action": {
+    "default_icon": {
+      "192": "logo190.png"
+    },
+    "default_title": "Popup",
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html"
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <script src="../scripts/dao/db.js"></script>
+  <script src="../scripts/personalizar.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Preferências</title>
+</head>
+
+<body id="body1">
+	<fieldset>
+		<legend>Sites</legend>
+		<input id="edSite" type="text" placeholder="Entre com o Site">
+		<button id="botaoAddSite">Adicionar</button>
+		<table id="siteItems" style="margin: 15px;width: 100%;display:block;">
+  	    	<thead style="display: inline-block;width: 100%;height: 20px;">
+ 	      		<tr>
+ 	        		<th>Site</th>
+ 	      		</tr>
+  	      	</thead>
+  	      	<tbody style="height: 112px;display: inline-block;width: 90%;overflow: auto;">
+  	      	</tbody>
+  	    </table>
+	</fieldset>
+	
+	<fieldset>
+    	<legend>Palavras Chave</legend>
+      	<input id="edPalavra" type="text" placeholder="Entre com a Palavra">
+      	<button id="botaoAddPalavra">Adicionar</button>
+    	<table id="palavraItems" style="margin: 15px;width: 100%;display:block;">
+			<thead style="display: inline-block;width: 100%;height: 20px;">
+				<tr>
+				    <th>Palavra</th>
+			  	</tr>
+			</thead>
+			<tbody style="height: 112px;display: inline-block;width: 90%;overflow: auto;">
+			</tbody>
+   	    </table>
+	</fieldset>
+	
+	<article>
+		<input type="button" id="botaoVoltar" value="Voltar"/>
+	</article>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "tourmaline-ext",
+  "version": "1.0.0",
+  "description": "Plug-in para Google Chrome, com objetivo de fazer um controle parental de sites acessados.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=development",
+    "watch": "webpack --watch"
+  },
+  "keywords": [
+    "chrome extension",
+    "parental control"
+  ],
+  "author": "André Bemfica",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.2.0"
+  }
+}

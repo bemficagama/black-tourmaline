@@ -1,0 +1,32 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/scripts/background.js":
+/*!***********************************!*\
+  !*** ./src/scripts/background.js ***!
+  \***********************************/
+/***/ (() => {
+
+eval("let db = null;\r\n\r\n// Listener que verifica a aba a cada mudança ou atualização\r\n/* chrome.tabs.onUpdated.addListener(function (tabid, change, tab) {\r\n\twindow.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;\r\n\twindow.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;\r\n\twindow.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;\r\n\r\n\tif (typeof db != 'Object') {\r\n\t\tvar DBOpenRequest = window.indexedDB.open(\"tourmaline\", 1);\r\n\r\n\t\tDBOpenRequest.onsuccess = function (event) {\r\n\t\t\tdb = DBOpenRequest.result;\r\n\t\t\tativo(tabid, change, tab);\r\n\t\t};\r\n\r\n\t\tDBOpenRequest.onupgradeneeded = function (event) {\r\n\t\t\tdb = event.target.result\r\n\r\n\t\t\tdbUpgrade(db);\r\n\t\t}\r\n\t} else {\r\n\t\tativo(tabid, change, tab);\r\n\t}\r\n}); */\r\n\r\nfunction extractDomain(url) {\r\n\tvar domain;\r\n\t//find & remove protocol (http, ftp, etc.) and get domain\r\n\tif (url.indexOf(\"://\") > -1) {\r\n\t\tdomain = url.split('/')[2];\r\n\t}\r\n\telse {\r\n\t\tdomain = url.split('/')[0];\r\n\t}\r\n\r\n\t//find & remove port number\r\n\tdomain = domain.split(':')[0];\r\n\r\n\treturn domain;\r\n}\r\n\r\nfunction ativo(tabid, change, tab) {\r\n\tvar link = document.createElement('a');\r\n\tlink.setAttribute('href', tab.url);\r\n\r\n\tvar transaction = db.transaction(['preferencia'], 'readonly');\r\n\tvar objectStore = transaction.objectStore('preferencia');\r\n\tvar request = objectStore.get(1);\r\n\r\n\trequest.onsuccess = function (evt) {\r\n\t\tvar value = request.result;\r\n\t\tvar hoInicial = \"1900-01-01T\" + value.hoInicial + \":00.000Z\";\r\n\t\thoInicial = new Date(hoInicial).getTime();\r\n\t\tvar hoFinal = \"1900-01-01T\" + value.hoFinal + \":00.000Z\";\r\n\t\thoFinal = new Date(hoFinal).getTime();\r\n\t\tvar hoAtual = \"1900-01-01T\" + (new Date().toLocaleTimeString()) + \".000Z\";\r\n\t\thoAtual = new Date(hoAtual).getTime();\r\n\r\n\t\tif (value.ativo == true && link.protocol) {\r\n\t\t\tif (!(link.protocol == \"chrome-extension:\" || link.protocol == \"chrome:\")) {\r\n\t\t\t\tif (hoAtual >= hoInicial && hoAtual <= hoFinal) {\r\n\t\t\t\t\tif (getSite(extractDomain(tab.url), tabid) != true) {\r\n\t\t\t\t\t\tgetPalavra(tabid, tab);\r\n\t\t\t\t\t}\r\n\t\t\t\t} else {\r\n\t\t\t\t\tchrome.tabs.update(tabid, { url: 'paginas/block.html' }, null);\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n\r\nfunction getSite(url, id) {\r\n\tconsole.log(\"getSite: \" + url);\r\n\r\n\tvar bloqueado = \"false\";\r\n\r\n\tvar transaction = db.transaction(['site'], 'readonly');\r\n\tvar objectStore = transaction.objectStore('site');\r\n\tvar indice = objectStore.index('url');\r\n\tindice.get(url).onsuccess = function (event) {\r\n\t\tvar cursor = event.target.result;\r\n\t\tif (cursor) {\r\n\t\t\tif (cursor.bloqueado == 'true') {\r\n\t\t\t\tbloqueado = \"true\";\r\n\t\t\t\tchrome.tabs.update(id, { url: 'paginas/block.html' }, null);\r\n\t\t\t}\r\n\t\t} else {\r\n\t\t\tconsole.log(\"Record retrieved.\");\r\n\t\t}\r\n\r\n\t\tif (url.split(\".\").length > 1) {\r\n\t\t\tvar now = new Date();\r\n\t\t\tnow = now.getFullYear().toString() + \"-\" + (now.getMonth() + 1).toString() + \"-\" + now.getDate().toString() + \"T00:00:00.000Z\";\r\n\r\n\t\t\tvar transaction = db.transaction(['acesso'], 'readwrite');\r\n\t\t\tvar acessoStore = transaction.objectStore('acesso');\r\n\t\t\tacessoStore.add({ url: url, data: now, bloqueado: bloqueado.toString() });\r\n\t\t}\r\n\t};\r\n\r\n\tindice.onerror = function () {\r\n\t\t// If an error occurs with the request, log what it is\r\n\t\tconsole.log(\"There has been an error with retrieving your data: \" + objectStoreTitleRequest.error);\r\n\t};\r\n\treturn bloqueado = (bloqueado == \"true\");\r\n}\r\n\r\nfunction getPalavra(tabid, tab) {\r\n\tconsole.log(\"getPalavra: \" + tab.url);\r\n\r\n\tvar transaction = db.transaction(['palavra'], 'readonly');\r\n\tvar objectStore = transaction.objectStore('palavra');\r\n\tvar indice = objectStore.index('bloqueado');\r\n\r\n\trange = IDBKeyRange.only(\"true\");\r\n\r\n\tindice.openCursor(range).onsuccess = function (event) {\r\n\t\tvar cursor = event.target.result;\r\n\t\tif (cursor) {\r\n\t\t\tregExp = new RegExp(cursor.value.palavra, \"i\");\r\n\t\t\tif (tab.url.match(regExp) != null || tab.title.match(regExp) != null) {\r\n\t\t\t\tchrome.tabs.update(tabid, { url: 'paginas/block.html' }, null);\r\n\t\t\t\tvar now = new Date();\r\n\t\t\t\tnow = now.getFullYear().toString() + \"-\" + (now.getMonth() + 1).toString() + \"-\" + now.getDate().toString() + \"T00:00:00.000Z\";\r\n\r\n\t\t\t\tvar acessoTransaction = db.transaction(['acesso'], 'readwrite');\r\n\t\t\t\tvar acessoStore = acessoTransaction.objectStore('acesso');\r\n\t\t\t\tacessoStore.add({ url: tab.url, data: now, bloqueado: \"true\" });\r\n\t\t\t}\r\n\t\t\tcursor.continue();\r\n\t\t} else {\r\n\t\t\tconsole.log(\"Record retrieved.\");\r\n\t\t}\r\n\r\n\r\n\t};\r\n\r\n\tindice.onerror = function () {\r\n\t\t// If an error occurs with the request, log what it is\r\n\t\tconsole.log(\"There has been an error with retrieving your data: \" + objectStoreTitleRequest.error);\r\n\t};\r\n}\r\n\r\n\n\n//# sourceURL=webpack://tourmaline-ext/./src/scripts/background.js?");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./src/scripts/background.js"]();
+/******/ 	
+/******/ })()
+;
