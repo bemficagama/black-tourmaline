@@ -1,11 +1,21 @@
-import useAuth from "../../data/hook/useAuth"
+'use client'
+
 import { IconeAjustes, IconeCasa, IconeSair, IconeSino } from "../icons"
 import Logo from "./Logo"
 import MenuItem from "./MenuItem"
+import { signOut } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 
 export default function MenuLateral() {
+    const router = useRouter()
 
-    const { logout } = useAuth()
+    async function logout() {
+		await signOut({
+			redirect: false
+		})
+
+		router.replace('/')
+	}
 
     return (
         <aside className={`

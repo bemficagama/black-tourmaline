@@ -2,10 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
-import MenuLateral from '@/components/template/MenuLateral'
-import Cabecalho from '@/components/template/Cabecalho'
-import Conteudo from '@/components/template/Conteudo'
-import useAppData from '@/data/hook/useAppData'
+import NextAuthSessionProvider from './providers/sessionProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,18 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className={`${tema} flex h-screen w-screen`}>
-          <MenuLateral />
-          <div className={`
-                flex flex-col w-full p-7 
-                bg-gray-300 dark:bg-gray-800
-            `}>
-            <Cabecalho titulo={'Menu Inicial'} subtitulo={'Estamos construindo um template Admin!'} />
-            <Conteudo>
-              {children}
-            </Conteudo>
-          </div>
-        </div>
+        <NextAuthSessionProvider>
+          {children}
+        </NextAuthSessionProvider>
       </body>
     </html>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useEffect, useState } from "react";
+import { SetStateAction, createContext, useEffect, useState } from "react";
 
 // type Tema = 'dark' | ''
 
@@ -22,7 +22,7 @@ export function AppProvider(props: any) {
 
     useEffect(() => {
         const temaSalvo = localStorage.getItem('tema')
-        setTema(temaSalvo)
+        setTema(temaSalvo as SetStateAction<string>)
     }, [])
 
     return (
