@@ -7,11 +7,16 @@ import { UseGlobalContext } from '@/app/Context/store'
 import { ReactNode, useEffect } from 'react'
 
 interface LayoutProps {
+    username: string
     children: ReactNode
 }
 
 export default function Layout(props: LayoutProps) {
-    const { tema, titulo, subtitulo } = UseGlobalContext()
+    const { tema, titulo, subtitulo, setUsername } = UseGlobalContext()
+
+    useEffect(() => {
+        setUsername(props.username!)
+    })
 
     return (
         <div className={`${tema} flex h-screen w-screen`}>

@@ -21,7 +21,7 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
 
 	return (
 		<>
-			<Layout>
+			<Layout username={session!.user!.name!}>
 				{children}
 			</Layout>
 		</>

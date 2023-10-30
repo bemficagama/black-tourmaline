@@ -11,6 +11,8 @@ interface AppContextProps {
     alternarTema?: () => void
     setTitulo: Dispatch<SetStateAction<string>>
     setSubtitulo: Dispatch<SetStateAction<string>>
+    username: string
+    setUsername: Dispatch<SetStateAction<string>>
 }
 
 const GlobalContext = createContext<AppContextProps>({
@@ -18,13 +20,17 @@ const GlobalContext = createContext<AppContextProps>({
     titulo: '',
     subtitulo: '',
     setTitulo: (): string => '',
-    setSubtitulo: (): string => ''
+    setSubtitulo: (): string => '',
+    username: '',
+    setUsername: (): string => ''
+
 })
 
 export const GlobalContextProvider = (props: any) => {
-    const [tema, setTema] = useState(props.tema)
+    const [tema, setTema] = useState('dark')
     const [titulo, setTitulo] = useState('Página Inicial')
     const [subtitulo, setSubtitulo] = useState('Seja Bem Vindo!')
+    const [username, setUsername] = useState('')
 
     function alternarTema() {
         const novoTema = tema === '' ? 'dark' : ''
@@ -44,7 +50,9 @@ export const GlobalContextProvider = (props: any) => {
             subtitulo,
             alternarTema,
             setTitulo,
-            setSubtitulo
+            setSubtitulo,
+            username,
+            setUsername
         }}>
             {props.children}
         </GlobalContext.Provider>
