@@ -1,31 +1,30 @@
+'use client'
+
 import MenuLateral from './MenuLateral'
 import Cabecalho from './Cabecalho'
 import Conteudo from './Conteudo'
-import ForcarAutenticacao from '../auth/ForcarAutenticacao'
-import useAppData from '../../data/hook/useAppData'
+import { UseGlobalContext } from '@/app/Context/store'
+import { ReactNode, useEffect } from 'react'
 
 interface LayoutProps {
-    titulo: string
-    subtitulo: string
-    children?: any
+    children: ReactNode
 }
 
 export default function Layout(props: LayoutProps) {
-    const { tema } = useAppData()
+    const { tema, titulo, subtitulo } = UseGlobalContext()
+
     return (
-        <ForcarAutenticacao>
-            <div className={`${tema} flex h-screen w-screen`}>
-                <MenuLateral />
-                <div className={`
+        <div className={`${tema} flex h-screen w-screen`}>
+            <MenuLateral />
+            <div className={`
                 flex flex-col w-full p-7 
                 bg-gray-300 dark:bg-gray-800
             `}>
-                    <Cabecalho titulo={props.titulo} subtitulo={props.subtitulo} />
-                    <Conteudo>
-                        {props.children}
-                    </Conteudo>
-                </div>
+                <Cabecalho titulo={titulo} subtitulo={subtitulo} />
+                <Conteudo>
+                    {props.children}
+                </Conteudo>
             </div>
-        </ForcarAutenticacao>
+        </div>
     )
 }
